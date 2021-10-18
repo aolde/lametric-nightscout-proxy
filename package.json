@@ -1,10 +1,10 @@
 {
-  "name": "template-nodejs-ts-api-docker",
+  "name": "lametric-nightscout-proxy",
   "version": "0.0.0-development",
   "description": "Template with nodejs, typescript, api, docker.",
   "main": "index.js",
   "keywords": [],
-  "repository": "git@github.com:aolde/template-nodejs-ts-api-docker.git",
+  "repository": "git@github.com:aolde/lametric-nightscout-proxy.git",
   "author": "Andreas Oldeskog <142856+aolde@users.noreply.github.com>",
   "license": "MIT",
   "scripts": {

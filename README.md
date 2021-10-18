@@ -1,19 +1,19 @@
-![Logo template-nodejs-ts-api-docker](https://github.com/aolde/template-nodejs-ts-api-docker/blob/main/assets/logo.png?raw=true)
+![Logo lametric-nightscout-proxy](https://github.com/aolde/lametric-nightscout-proxy/blob/main/assets/logo.png?raw=true)
 
-# template-nodejs-ts-api-docker
+# lametric-nightscout-proxy
 
-Description of project here.
+Proxy web server used to transform Nightscout data to the LaMetric app.
 
 ## Docker
 
 ```
-docker pull aolde/template-nodejs-ts-api-docker
+docker pull aolde/lametric-nightscout-proxy
 ```
 
 ```
-docker run --rm --name template-nodejs-ts-api-docker \
+docker run --rm --name lametric-nightscout-proxy \
     -p 3001:80 \
-    aolde/template-nodejs-ts-api-docker
+    aolde/lametric-nightscout-proxy
 ```
 
 ```
@@ -24,7 +24,7 @@ curl http://localhost:3000/
 
 ```console
 helm repo add aolde https://aolde.github.com/helm
-helm install -f values.yaml template-nodejs-ts-api-docker aolde/template-nodejs-ts-api-docker
+helm install -f values.yaml lametric-nightscout-proxy aolde/lametric-nightscout-proxy
 ```
 
-See more info in the [helm chart](https://github.com/aolde/helm/tree/main/charts/template-nodejs-ts-api-docker).
+See more info in the [helm chart](https://github.com/aolde/helm/tree/main/charts/lametric-nightscout-proxy).

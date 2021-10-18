@@ -49,4 +49,4 @@ jobs:
       #   with:
       #     context: .
       #     push: true
-      #     tags: ghcr.io/aolde/template-nodejs-ts-api-docker:latest
+      #     tags: ghcr.io/aolde/lametric-nightscout-proxy:latest
