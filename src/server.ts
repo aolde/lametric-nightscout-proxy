@@ -1,6 +1,7 @@
 import fastify from "fastify";
 import fastifyGracefulShutdown from "fastify-graceful-shutdown";
 import logdown from "logdown";
+import { nightscoutHandler } from "./nightscoutHandler";
 
 const logger = logdown("example");
 
@@ -8,10 +9,7 @@ const server = fastify({ logger: true });
 
 server.register(fastifyGracefulShutdown);
 
-server.get("/", (_, reply) => {
-  logger.info("hello world"); // example logging
-  reply.send("hello world");
-});
+server.get("/", nightscoutHandler);
 
 server.get("/health", (_, reply) => {
   reply.send("ok");
