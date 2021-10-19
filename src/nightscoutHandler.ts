@@ -9,9 +9,16 @@ export const nightscoutHandler = async function (
   request: FastifyRequest,
   reply: FastifyReply
 ) {
-  // request.query.nightscoutUrl
-  logger.info((process.env as any).NS_URL);
-  const entries = await getEntries((process.env as any).NS_URL);
+  const nsUrl = (request.query as any).nightscoutUrl;
+
+  if (!nsUrl) {
+    return {
+      error: "Missing nightscoutUrl querystring",
+    };
+  }
+
+  logger.info(nsUrl);
+  const entries = await getEntries(nsUrl);
   logger.info(entries.length);
 
   const latestEntry = entries[0];
