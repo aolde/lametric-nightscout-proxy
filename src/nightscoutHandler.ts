@@ -13,7 +13,12 @@ export const nightscoutHandler = async function (
 
   if (!nsUrl) {
     return {
-      error: "Missing nightscoutUrl querystring",
+      frames: [
+        {
+          text: "Missing Nightscout URL",
+          icon: 61,
+        },
+      ],
     };
   }
 
@@ -22,11 +27,13 @@ export const nightscoutHandler = async function (
   logger.info(entries.length);
 
   const latestEntry = entries[0];
+  const glucose = roundGlucose(mgdlToMmoll(latestEntry.sgv));
+  const delta = roundGlucose(mgdlToMmoll(latestEntry.delta));
 
   return {
     frames: [
       {
-        text: roundGlucose(mgdlToMmoll(latestEntry.sgv)),
+        text: glucose + " " + (latestEntry.delta > 0 ? "+" : "") + delta,
         icon: 61,
       },
       {
