@@ -46,7 +46,7 @@ export interface NightscoutEntry {
   /** Delta between previous and current value */
   delta: number;
   /** Direction of glucose trend reported by CGM. (only available for sgv types) */
-  direction: string;
+  direction: Direction;
   /** sgv, mbg, cal, etc */
   type: string;
   /** The raw filtered value directly from CGM transmitter. (only available for sgv types) */
@@ -61,3 +61,22 @@ export interface NightscoutEntry {
   utcOffset: number;
   mills: any;
 }
+
+// Nightscout uses PascalCase and Sugarmate.io uses underscore casing.
+export type Direction =
+  | "DoubleDown"
+  | "DOUBLE_DOWN"
+  | "SingleDown"
+  | "SINGLE_DOWN"
+  | "FortyFiveDown"
+  | "FORTY_FIVE_DOWN"
+  | "Flat"
+  | "FLAT"
+  | "FortyFiveUp"
+  | "FORTY_FIVE_UP"
+  | "SingleUp"
+  | "SINGLE_UP"
+  | "DoubleUp"
+  | "DOUBLE_UP"
+  | "NOT COMPUTABLE"
+  | "NONE";
