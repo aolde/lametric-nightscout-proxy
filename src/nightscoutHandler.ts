@@ -30,7 +30,9 @@ export const nightscoutHandler = async function (
         icon: 61,
       },
       {
-        chartData: entries.map((entry) => roundGlucose(mgdlToMmoll(entry.sgv))),
+        chartData: entries
+          .map((entry) => roundGlucose(mgdlToMmoll(entry.sgv)))
+          .reverse(),
       },
     ],
   };
