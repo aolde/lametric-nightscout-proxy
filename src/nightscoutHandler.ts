@@ -1,15 +1,33 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-import logdown, { Logger } from "logdown";
-import { Direction, getEntries } from "./NightscoutApi";
-import { mgdlToMmoll, roundGlucose } from "./utils";
+import logdown from "logdown";
+import { getEntries } from "./nightscoutApi/entries";
+import { getProperties } from "./nightscoutApi/properties";
+import { glucoseGraphFrame } from "./frames/glucoseGraphFrame";
+import { glucoseFrame } from "./frames/glucoseFrame";
+import { iobFrame } from "./frames/iobFrame";
 
 const logger = logdown("nightscoutHandler");
+
+const frames = {
+  "Glucose value": glucoseFrame,
+  "Glucose graph": glucoseGraphFrame,
+  IOB: iobFrame,
+  // "% In Range": inRangeFrame,
+};
+type Frames = keyof typeof frames | string;
 
 export const nightscoutHandler = async function (
   request: FastifyRequest,
   reply: FastifyReply
 ) {
   const nsUrl = (request.query as any).nightscoutUrl;
+  let enabledFrames = (request.query as any).enabledFrames?.split(
+    ","
+  ) as Frames[];
+
+  if (!enabledFrames) {
+    enabledFrames = ["Glucose value", "Glucose graph", "IOB"];
+  }
 
   if (!nsUrl) {
     return {
@@ -22,46 +40,14 @@ export const nightscoutHandler = async function (
     };
   }
 
-  logger.info(nsUrl);
   const entries = await getEntries(nsUrl);
-  logger.info(entries.length);
+  const properties = await getProperties(nsUrl, null, ["iob"]);
 
-  const latestEntry = entries[0];
-
-  const glucose = roundGlucose(mgdlToMmoll(latestEntry.sgv));
-  const delta = roundGlucose(mgdlToMmoll(latestEntry.delta));
+  const renderedFrames = Object.entries(frames)
+    .filter(([key]) => enabledFrames.includes(key))
+    .map(([_, frameFunc]) => frameFunc(entries, properties));
 
   return {
-    frames: [
-      {
-        text: glucose + " " + (latestEntry.delta > 0 ? "+" : "") + delta,
-        icon: getDirectionIconId(latestEntry.direction),
-      },
-      {
-        chartData: entries
-          .map((entry) => roundGlucose(mgdlToMmoll(entry.sgv)))
-          .reverse(),
-      },
-    ],
+    frames: renderedFrames,
   };
 };
-
-function getDirectionIconId(direction: Direction, colorRed: boolean = false) {
-  if (direction == "DoubleDown" || direction == "DOUBLE_DOWN")
-    return colorRed ? "a30925" : "a30917";
-  else if (direction == "SingleDown" || direction == "SINGLE_DOWN")
-    return colorRed ? "i30923" : "i30915";
-  else if (direction == "FortyFiveDown" || direction == "FORTY_FIVE_DOWN")
-    return colorRed ? "i30919" : "i30911";
-  else if (direction == "Flat" || direction == "FLAT")
-    return colorRed ? "i30921" : "i30913";
-  else if (direction == "FortyFiveUp" || direction == "FORTY_FIVE_UP")
-    return colorRed ? "i30920" : "i30912";
-  else if (direction == "SingleUp" || direction == "SINGLE_UP")
-    return colorRed ? "i30922" : "i30914";
-  else if (direction == "DoubleUp" || direction == "DOUBLE_UP")
-    return colorRed ? "a30924" : "a30916";
-  else if (direction == "NONE") return "i3769";
-  else if (direction == "NOT COMPUTABLE") return "i3769";
-  else return "i3769";
-}
