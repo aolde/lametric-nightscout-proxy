@@ -54,8 +54,8 @@ export const nightscoutHandler = async function (
       (rawSettings.enabledFrames?.split(",") as Frames[]) ??
       Object.keys(frames),
     unit: unit,
-    lowTarget: parseFloat(rawSettings.lowTarget ?? targetRange[unit][0]),
-    highTarget: parseFloat(rawSettings.highTarget ?? targetRange[unit][1]),
+    lowTarget: parseFloat(rawSettings.lowTarget || targetRange[unit][0]),
+    highTarget: parseFloat(rawSettings.highTarget || targetRange[unit][1]),
   };
 
   if (!settings.nightscoutUrl) {
