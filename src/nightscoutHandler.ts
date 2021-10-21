@@ -17,16 +17,16 @@ const frames = {
 };
 type Frames = keyof typeof frames | string;
 
-type Settings = {
+type RawSettings = {
   nightscoutUrl: string;
   enabledFrames: string;
-  lowTarget: number;
-  highTarget: number;
+  lowTarget: string;
+  highTarget: string;
   unit: "mmol/L" | "mg/dL";
 };
 
 export const nightscoutHandler = async function (
-  request: FastifyRequest<{ Querystring: Settings }>,
+  request: FastifyRequest<{ Querystring: RawSettings }>,
   reply: FastifyReply
 ) {
   const settings = request.query;
