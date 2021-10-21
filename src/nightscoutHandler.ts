@@ -20,6 +20,9 @@ type Frames = keyof typeof frames | string;
 type Settings = {
   nightscoutUrl: string;
   enabledFrames: string;
+  lowTarget: number;
+  highTarget: number;
+  unit: "mmol/L" | "mg/dL";
 };
 
 export const nightscoutHandler = async function (
@@ -31,12 +34,7 @@ export const nightscoutHandler = async function (
   let enabledFrames = settings.enabledFrames?.split(",") as Frames[];
 
   if (!enabledFrames) {
-    enabledFrames = [
-      "Glucose value",
-      "Glucose graph",
-      "IOB",
-      "Target in range",
-    ];
+    enabledFrames = Object.keys(frames);
   }
 
   if (!nsUrl) {
