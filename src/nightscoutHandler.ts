@@ -19,6 +19,7 @@ type Frames = keyof typeof frames | string;
 
 type RawSettings = {
   nightscoutUrl: string;
+  token: string;
   enabledFrames: string;
   lowTarget: string;
   highTarget: string;
@@ -26,8 +27,7 @@ type RawSettings = {
 };
 
 export const nightscoutHandler = async function (
-  request: FastifyRequest<{ Querystring: RawSettings }>,
-  reply: FastifyReply
+  request: FastifyRequest<{ Querystring: RawSettings }>
 ) {
   const settings = request.query;
   const nsUrl = settings.nightscoutUrl;
@@ -51,11 +51,11 @@ export const nightscoutHandler = async function (
   const dateToday = new Date().toISOString().substring(0, 10); // format 2000-01-01
   const entries = await getEntries(
     nsUrl,
-    null,
+    settings.token,
     { "find[dateString][$gte]": dateToday },
     0
   );
-  const properties = await getProperties(nsUrl, null, ["iob"]);
+  const properties = await getProperties(nsUrl, settings.token, ["iob"]);
 
   const renderedFrames = Object.entries(frames)
     .filter(([key]) => enabledFrames.includes(key))
