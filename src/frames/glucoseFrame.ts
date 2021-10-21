@@ -10,7 +10,7 @@ export const glucoseFrame = (data: FrameData): LaMetricFrame => {
   const separator = data.settings.unit === "mmol/L" ? " " : ""; // too tight to use space separator in mg/dL unit
 
   return {
-    text: glucose + separator + (latestEntry.delta >= 0 ? "+" : "") + delta,
+    text: glucose + separator + (delta >= 0 ? "+" : "") + delta,
     icon: getDirectionIconId(latestEntry.direction),
   };
 };
