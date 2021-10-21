@@ -8,11 +8,13 @@ import { iobFrame } from "./frames/iobFrame";
 import { inRangeFrame } from "./frames/inRangeFrame";
 import { FrameData } from "./frames/FrameData";
 import { mgdlToMmoll } from "./utils";
+import { glucoseTimeFrame } from "./frames/glucoseTimeFrame";
 
 const logger = logdown("nightscoutHandler");
 
 const frames = {
   "Glucose value": glucoseFrame,
+  "Elapsed mins": glucoseTimeFrame,
   "Glucose graph": glucoseGraphFrame,
   IOB: iobFrame,
   "Target in range": inRangeFrame,
@@ -79,7 +81,7 @@ export const nightscoutHandler = async function (
   const properties = await getProperties(
     settings.nightscoutUrl,
     settings.token,
-    ["iob"]
+    ["iob", "delta"]
   );
 
   const frameData: FrameData = {
