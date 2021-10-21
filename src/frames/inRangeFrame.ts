@@ -1,15 +1,16 @@
-import { mgdlToMmoll, roundGlucose } from "../utils";
-import { NightscoutEntry } from "../nightscoutApi/entries";
 import { LaMetricFrame } from "../lametric/LaMetricFrame";
+import { FrameData } from "./FrameData";
 
-export const inRangeFrame = (entries: NightscoutEntry[]): LaMetricFrame => {
-  const totalItems = entries.length;
-  const inRangeItems = entries.filter(
-    (e) => mgdlToMmoll(e.sgv) >= 3.9 && mgdlToMmoll(e.sgv) <= 10
+export const inRangeFrame = (data: FrameData): LaMetricFrame => {
+  const totalItems = data.entries.length;
+  const inRangeItems = data.entries.filter(
+    (e) =>
+      data.convertGlucoseUnit(e.sgv) >= data.settings.lowTarget &&
+      data.convertGlucoseUnit(e.sgv) <= data.settings.highTarget
   ).length;
 
   return {
-    icon: "47199",
+    icon: "47199", // icon with white checkmark with a green background
     goalData: {
       start: 0,
       end: 100,

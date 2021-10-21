@@ -1,12 +1,8 @@
 import { LaMetricFrame } from "../lametric/LaMetricFrame";
-import { NightscoutEntry } from "../nightscoutApi/entries";
-import { NightscoutProperties } from "../nightscoutApi/properties";
+import { FrameData } from "./FrameData";
 
-export const iobFrame = (
-  _: NightscoutEntry[],
-  properties: NightscoutProperties
-): LaMetricFrame => {
+export const iobFrame = (data: FrameData): LaMetricFrame => {
   return {
-    text: properties.iob.displayLine,
+    text: data.properties.iob.displayLine,
   };
 };

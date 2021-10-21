@@ -1,12 +1,12 @@
-import { getDirectionIconId, mgdlToMmoll, roundGlucose } from "../utils";
-import { NightscoutEntry } from "../nightscoutApi/entries";
+import { getDirectionIconId, roundGlucose } from "../utils";
 import { LaMetricFrame } from "../lametric/LaMetricFrame";
+import { FrameData } from "./FrameData";
 
-export const glucoseFrame = (entries: NightscoutEntry[]): LaMetricFrame => {
-  const latestEntry = entries[0];
+export const glucoseFrame = (data: FrameData): LaMetricFrame => {
+  const latestEntry = data.entries[0];
 
-  const glucose = roundGlucose(mgdlToMmoll(latestEntry.sgv));
-  const delta = roundGlucose(mgdlToMmoll(latestEntry.delta));
+  const glucose = roundGlucose(data.convertGlucoseUnit(latestEntry.sgv));
+  const delta = roundGlucose(data.convertGlucoseUnit(latestEntry.delta));
 
   return {
     text: glucose + " " + (latestEntry.delta >= 0 ? "+" : "") + delta,

@@ -6,6 +6,8 @@ import { glucoseGraphFrame } from "./frames/glucoseGraphFrame";
 import { glucoseFrame } from "./frames/glucoseFrame";
 import { iobFrame } from "./frames/iobFrame";
 import { inRangeFrame } from "./frames/inRangeFrame";
+import { FrameData } from "./frames/FrameData";
+import { mgdlToMmoll } from "./utils";
 
 const logger = logdown("nightscoutHandler");
 
@@ -52,8 +54,8 @@ export const nightscoutHandler = async function (
       (rawSettings.enabledFrames?.split(",") as Frames[]) ??
       Object.keys(frames),
     unit: unit,
-    lowTarget: parseFloat(rawSettings.lowTarget ?? targetRange[unit]),
-    highTarget: parseFloat(rawSettings.highTarget ?? targetRange[unit]),
+    lowTarget: parseFloat(rawSettings.lowTarget ?? targetRange[unit][0]),
+    highTarget: parseFloat(rawSettings.highTarget ?? targetRange[unit][1]),
   };
 
   if (!settings.nightscoutUrl) {
@@ -80,9 +82,22 @@ export const nightscoutHandler = async function (
     ["iob"]
   );
 
+  const frameData: FrameData = {
+    properties,
+    entries,
+    settings,
+    convertGlucoseUnit: (mgdl) => {
+      if (settings.unit === "mmol/L") {
+        return mgdlToMmoll(mgdl);
+      }
+
+      return mgdl;
+    },
+  };
+
   const renderedFrames = Object.entries(frames)
     .filter(([key]) => settings.enabledFrames.includes(key))
-    .map(([_, frameFunc]) => frameFunc(entries, properties));
+    .map(([_, frameFunc]) => frameFunc(frameData));
 
   return {
     frames: renderedFrames,
