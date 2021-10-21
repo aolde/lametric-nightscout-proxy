@@ -22,6 +22,7 @@ const start = async () => {
   try {
     await server.listen(port, address);
   } catch (error) {
+    logger.error(error);
     server.log.error(error);
     process.exit(1);
   }

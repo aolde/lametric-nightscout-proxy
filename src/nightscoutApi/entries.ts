@@ -1,5 +1,8 @@
 import got from "got";
 import { stringify } from "querystring";
+import logdown from "logdown";
+
+const logger = logdown("nightscout");
 
 /**
  * The Entries endpoint returns information about the Nightscout entries.
@@ -14,20 +17,22 @@ import { stringify } from "querystring";
 export const getEntries = async (
   baseUrl: string,
   token: string | null = null,
-  find: string | null = null,
+  find: Record<string, string> | null = null,
   count: number | null = null
 ) => {
   const params = {
     token,
-    find,
     count,
+    ...find,
   };
+
   const response = await got.get<NightscoutEntry[]>(
     `${baseUrl}/api/v1/entries.json?${stringify(params)}`,
     { responseType: "json" }
   );
 
   if (response.statusCode !== 200) {
+    logger.error("Could not fetch entries from Nightscout");
     throw new Error("Could not fetch entries from Nightscout");
   }
 
