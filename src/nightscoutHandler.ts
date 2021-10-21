@@ -26,18 +26,37 @@ type RawSettings = {
   unit: "mmol/L" | "mg/dL";
 };
 
+export type Settings = {
+  nightscoutUrl: string;
+  token: string;
+  enabledFrames: Frames[];
+  lowTarget: number;
+  highTarget: number;
+  unit: "mmol/L" | "mg/dL";
+};
+
+const targetRange: Record<Settings["unit"], [low: string, high: string]> = {
+  "mmol/L": ["3.9", "10"],
+  "mg/dL": ["70", "180"],
+};
+
 export const nightscoutHandler = async function (
   request: FastifyRequest<{ Querystring: RawSettings }>
 ) {
-  const settings = request.query;
-  const nsUrl = settings.nightscoutUrl;
-  let enabledFrames = settings.enabledFrames?.split(",") as Frames[];
+  const rawSettings = request.query;
+  const unit = rawSettings.unit ?? "mmol/L";
+  const settings: Settings = {
+    nightscoutUrl: rawSettings.nightscoutUrl,
+    token: rawSettings.token,
+    enabledFrames:
+      (rawSettings.enabledFrames?.split(",") as Frames[]) ??
+      Object.keys(frames),
+    unit: unit,
+    lowTarget: parseFloat(rawSettings.lowTarget ?? targetRange[unit]),
+    highTarget: parseFloat(rawSettings.highTarget ?? targetRange[unit]),
+  };
 
-  if (!enabledFrames) {
-    enabledFrames = Object.keys(frames);
-  }
-
-  if (!nsUrl) {
+  if (!settings.nightscoutUrl) {
     return {
       frames: [
         {
@@ -50,15 +69,19 @@ export const nightscoutHandler = async function (
 
   const dateToday = new Date().toISOString().substring(0, 10); // format 2000-01-01
   const entries = await getEntries(
-    nsUrl,
+    settings.nightscoutUrl,
     settings.token,
     { "find[dateString][$gte]": dateToday },
     0
   );
-  const properties = await getProperties(nsUrl, settings.token, ["iob"]);
+  const properties = await getProperties(
+    settings.nightscoutUrl,
+    settings.token,
+    ["iob"]
+  );
 
   const renderedFrames = Object.entries(frames)
-    .filter(([key]) => enabledFrames.includes(key))
+    .filter(([key]) => settings.enabledFrames.includes(key))
     .map(([_, frameFunc]) => frameFunc(entries, properties));
 
   return {
