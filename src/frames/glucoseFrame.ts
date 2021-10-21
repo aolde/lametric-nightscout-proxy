@@ -8,7 +8,7 @@ export const glucoseFrame = (entries: NightscoutEntry[]) => {
   const delta = roundGlucose(mgdlToMmoll(latestEntry.delta));
 
   return {
-    text: glucose + " " + (latestEntry.delta > 0 ? "+" : "") + delta,
+    text: glucose + " " + (latestEntry.delta >= 0 ? "+" : "") + delta,
     icon: getDirectionIconId(latestEntry.direction),
   };
 };
