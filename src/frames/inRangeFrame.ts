@@ -9,11 +9,12 @@ export const inRangeFrame = (entries: NightscoutEntry[]): LaMetricFrame => {
   ).length;
 
   return {
+    icon: "47199",
     goalData: {
       start: 0,
       end: 100,
       current: Math.round((inRangeItems / totalItems) * 100),
-      unit: "% in range",
+      unit: "%",
     },
   };
 };
