@@ -12,7 +12,7 @@ export const inRangeFrame = (entries: NightscoutEntry[]): LaMetricFrame => {
     goalData: {
       start: 0,
       end: 100,
-      current: (inRangeItems / totalItems) * 100,
+      current: Math.round((inRangeItems / totalItems) * 100),
       unit: "%",
     },
   };
