@@ -11,8 +11,8 @@ export const inRangeFrame = (entries: NightscoutEntry[]): LaMetricFrame => {
   return {
     goalData: {
       start: 0,
-      end: totalItems,
-      current: inRangeItems,
+      end: 100,
+      current: (inRangeItems / totalItems) * 100,
       unit: "%",
     },
   };
