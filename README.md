@@ -1,6 +1,8 @@
-![Logo lametric-nightscout-proxy](https://github.com/aolde/lametric-nightscout-proxy/blob/main/assets/logo.png?raw=true)
+<!-- ![Logo lametric-nightscout-proxy](https://github.com/aolde/lametric-nightscout-proxy/blob/main/assets/logo.png?raw=true) -->
 
 # lametric-nightscout-proxy
+
+[![Release](https://github.com/aolde/lametric-nightscout-proxy/actions/workflows/release.yml/badge.svg)](https://github.com/aolde/lametric-nightscout-proxy/actions/workflows/release.yml)
 
 This repository contains a backend server that is used to transform data from a Nightscout API to a format that a LaMetric app can read. 
 
