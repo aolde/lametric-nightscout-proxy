@@ -2,18 +2,26 @@
 
 # lametric-nightscout-proxy
 
-Proxy web server used to transform Nightscout data to the LaMetric app.
+This repository contains a backend server that is used to transform data from a Nightscout API to a format that a LaMetric app can read. 
+
+## LaMetric App
+
+| App showcase |  |
+| ----------- | ----------- |
+| ![Glucose](assets/glucose.jpg) | ![Target in range](assets/inrange.jpg) |
+| ![Glucose](assets/iob.jpg) | ![Glucose](assets/minutes.jpg) |
+
 
 ## Docker
 
 ```
-docker pull aolde/lametric-nightscout-proxy
+docker pull ghcr.io/aolde/lametric-nightscout-proxy
 ```
 
 ```
 docker run --rm --name lametric-nightscout-proxy \
-    -p 3001:80 \
-    aolde/lametric-nightscout-proxy
+    -p 3000:80 \
+    ghcr.io/aolde/lametric-nightscout-proxy
 ```
 
 ```

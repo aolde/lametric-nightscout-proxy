@@ -104,3 +104,4 @@ dist
 .tern-port
 
 .envrc
+.DS_Store
