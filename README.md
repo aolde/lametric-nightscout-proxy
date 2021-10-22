@@ -10,7 +10,7 @@ This repository contains a backend server that is used to transform data from a 
 
 | App showcase | |
 | ----------- | ----------- |
-| Current glucose | Target in range |
+| Current glucose | Time in range |
 | ![Glucose](assets/glucose.jpg) | ![Target in range](assets/inrange.jpg) |
 | Insulin on board | Minutes since last value |
 | ![Glucose](assets/iob.jpg) | ![Glucose](assets/minutes.jpg) |
