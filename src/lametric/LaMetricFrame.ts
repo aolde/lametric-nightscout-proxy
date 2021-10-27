@@ -16,7 +16,7 @@ export type LaMetricFrame = {
   goalData?: LaMetricGoalData;
   /** (optional) Describes spike chart. Useful to visualize how data changes over time. Chart will be scaled automatically. */
   chartData?: number[];
-};
+} | null;
 
 export type LaMetricGoalData = {
   /** The start value */

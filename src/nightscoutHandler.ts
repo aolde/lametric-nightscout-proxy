@@ -28,6 +28,8 @@ type RawSettings = {
   lowTarget: string;
   highTarget: string;
   unit: "mmol/L" | "mg/dL";
+  hideTimeFrameWhenInRange: string;
+  hideIobFrameWhenEmpty: string;
 };
 
 export type Settings = {
@@ -37,6 +39,8 @@ export type Settings = {
   lowTarget: number;
   highTarget: number;
   unit: "mmol/L" | "mg/dL";
+  hideTimeFrameWhenInRange: boolean;
+  hideIobFrameWhenEmpty: boolean;
 };
 
 const targetRange: Record<Settings["unit"], [low: string, high: string]> = {
@@ -58,6 +62,8 @@ export const nightscoutHandler = async function (
     unit: unit,
     lowTarget: parseFloat(rawSettings.lowTarget || targetRange[unit][0]),
     highTarget: parseFloat(rawSettings.highTarget || targetRange[unit][1]),
+    hideTimeFrameWhenInRange: rawSettings.hideTimeFrameWhenInRange == "1",
+    hideIobFrameWhenEmpty: rawSettings.hideIobFrameWhenEmpty == "1",
   };
 
   if (!settings.nightscoutUrl) {
@@ -99,7 +105,8 @@ export const nightscoutHandler = async function (
 
   const renderedFrames = Object.entries(frames)
     .filter(([key]) => settings.enabledFrames.includes(key))
-    .map(([_, frameFunc]) => frameFunc(frameData));
+    .map(([_, frameFunc]) => frameFunc(frameData))
+    .filter((frame) => frame !== null);
 
   return {
     frames: renderedFrames,
