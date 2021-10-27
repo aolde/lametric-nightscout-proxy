@@ -62,8 +62,8 @@ export const nightscoutHandler = async function (
     unit: unit,
     lowTarget: parseFloat(rawSettings.lowTarget || targetRange[unit][0]),
     highTarget: parseFloat(rawSettings.highTarget || targetRange[unit][1]),
-    hideTimeFrameWhenInRange: rawSettings.hideTimeFrameWhenInRange == "1",
-    hideIobFrameWhenEmpty: rawSettings.hideIobFrameWhenEmpty == "1",
+    hideTimeFrameWhenInRange: rawSettings.hideTimeFrameWhenInRange === "true",
+    hideIobFrameWhenEmpty: rawSettings.hideIobFrameWhenEmpty === "true",
   };
 
   if (!settings.nightscoutUrl) {
