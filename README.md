@@ -25,10 +25,10 @@ This repository contains a backend server that is used to transform data from a 
 | nightscoutUrl | Nightscout URL | Text field |  |
 | token | Nightscout Token | Text field |  |
 | enabledFrames | Active views | Multiple choices | Glucose value, Elapsed mins, Glucose graph, IOB, Target in range |
-| lowTarget | Low target (default  3.9/70) | Text field |  |
-| highTarget | High target (default 10/180) | Text field |  |
+| lowTarget | Low glucose target (default  3.9/70) | Text field |  |
+| highTarget | High glucose target (default 10/180) | Text field |  |
 | unit | Unit | Single choice | mmol/L, mg/dL |
-| hideTimeFrameWhenInRange | Hide "Elapsed mins" when <5 mins? | Switch | true/false |
+| hideTimeFrameWhenInRange | Hide minutes when below 5 mins? | Switch | true/false |
 | hideIobFrameWhenEmpty | Show IOB only when not empty (0)? | Switch | true/false |
 
 ## Docker
