@@ -16,7 +16,7 @@ server.get("/health", (_, reply) => {
 });
 
 const address = process.env.HTTP_ADDRESS || "127.0.0.1";
-const port = process.env.HTTP_PORT || 3000;
+const port = process.env.PORT || process.env.HTTP_PORT || 3000;
 
 const start = async () => {
   try {
