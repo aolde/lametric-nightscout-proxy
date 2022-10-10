@@ -3,5 +3,8 @@
   "description": "Connector between LaMetric and your Nightscout site.",
   "repository": "https://github.com/aolde/lametric-nightscout-proxy",
   "logo": "https://raw.githubusercontent.com/aolde/lametric-nightscout-proxy/main/assets/lametric-nightscout-logo.png",
-  "keywords": ["nightscout", "lametric"]
+  "keywords": ["nightscout", "lametric"],
+  "env": {
+    "HTTP_ADDRESS": "0.0.0.0"
+  }
 }
