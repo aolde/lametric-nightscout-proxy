@@ -3,7 +3,7 @@ import fastifyGracefulShutdown from "fastify-graceful-shutdown";
 import logdown from "logdown";
 import { nightscoutHandler } from "./nightscoutHandler";
 
-const logger = logdown("example");
+const logger = logdown("lametric-nightscout");
 
 const server = fastify({ logger: true });
 
@@ -16,11 +16,11 @@ server.get("/health", (_, reply) => {
 });
 
 const address = process.env.HTTP_ADDRESS || "127.0.0.1";
-const port = process.env.PORT || process.env.HTTP_PORT || 3000;
+const port = process.env.PORT || process.env.HTTP_PORT || "3000";
 
 const start = async () => {
   try {
-    await server.listen(port, address);
+    await server.listen({ host: address, port: parseInt(port, 10) });
   } catch (error) {
     logger.error(error);
     server.log.error(error);
