@@ -7,6 +7,7 @@
 This repository contains a backend server that is used to transform data from a Nightscout API to a format that a LaMetric app can read.
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Faolde%2Flametric-nightscout-proxy&project-name=lametric-nightscout&repo-name=lametric-nightscout)
 
 ## LaMetric App
 
