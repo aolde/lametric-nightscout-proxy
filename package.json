@@ -1,7 +1,7 @@
 {
   "name": "lametric-nightscout-proxy",
   "version": "0.0.0-development",
-  "description": "Template with nodejs, typescript, api, docker.",
+  "description": "Proxy web server used to transform Nightscout data to the LaMetric app",
   "main": "index.js",
   "keywords": [],
   "repository": "git@github.com:aolde/lametric-nightscout-proxy.git",
